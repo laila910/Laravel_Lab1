@@ -24,9 +24,14 @@
           <td>{{$post['postedBy']}}</td>
           <td>{{$post['createdAt']}}</td>
           <td>
-            <a href="/posts/{{$post['id']}}" class="btn btn-primary">View</a>
-            <a href="/posts/{{$post['id']}}/edit" class="btn btn-secondary">Edit</a>
-            <a href="/posts/{{$post['id']}}" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">Delete</a>
+            {{-- <a href="/posts/{{$post['id']}}" class="btn btn-primary">View</a> --}}
+          <a href="/posts/{{$post['id']}}"><x-button type="primary"  message="Show"></x-button></a>
+          <a href="/posts/{{$post['id']}}/edit"><x-button type="secondary" message="Edit"></x-button></a>
+  <a href="/posts/{{$post['id']}}"><x-button type="danger"  data-toggle="modal" data-target="#exampleModal" message="delete"></x-button></a>
+   
+
+            {{-- <a href="/posts/{{$post['id']}}/edit" class="btn btn-secondary">Edit</a> --}}
+            {{-- <a href="/posts/{{$post['id']}}" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">Delete</a> --}}
           </td>
         </tr>
         @endforeach
