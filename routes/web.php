@@ -35,5 +35,5 @@ Route::patch('/posts/{post}',[PostController::class,'update'])->name('posts.upda
 // Delete New Post
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');//{{route(name of route)}} in blade
 
-// Route::resource('posts', 'PostController');
+
 

@@ -22,7 +22,10 @@
             <option value="2">Laila</option>
             <option value="3">Omar</option> --}}
             @foreach ($allUsers as $user)
-               <option value="{{$user->id}}">{{ $user->name }}</option>
+             
+               <option value="{{$user->id}}"   @if ($post['user_id']==$user->id) selected  @endif >{{ $user->name }}</option>
+             
+              
             @endforeach
         </select>
       </div>

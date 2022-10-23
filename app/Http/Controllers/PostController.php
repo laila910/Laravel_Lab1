@@ -1,9 +1,13 @@
 <?php
+namespace Carbon\Carbon;
+
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+
+
 
 class PostController extends Controller
 {
@@ -16,12 +20,65 @@ class PostController extends Controller
         //  ['id'=>4,'title'=>'post4','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'mohammed','createdAt'=>'30/1/2022']
         // ];
         $posts = Post::all();
+    //    dd($posts);
+    //    Carbon::Date();
+    // $carbon=Carbon::now();
+    //   $year=2022;
+    //   $month=10;
+    //   $day=23;
+    //   $tz = 'Europe/Madrid';
+  foreach($posts as $post){
+    // $post['created_at']=$post->created_at;
 
+    //  $post['created_at'] = Carbon::parse($post->created_at);
+      
+//    $post['created_at']= $post['created_at']->format('Y-m-d');
+ 
+// echo $post['created_at'];
+    //  echo $date;
+    //  $post->created_at=$date;
+    //  dd($post->created_at);
+// $date=Carbon::now();
+// $date=$post['created_at'];
+// $date=$date->isoFormat('Y-M-D');
+// $post['created_at']=$date;
+// $date;
+// dd($post['created_at']);
+
+// $post['created_at']=$post['created_at']->isoFormat('Y-M-D');
+
+// dd($post['created_at']->isoFormat('Y-M-D'));
+// $post['created_at']=$post['created_at']->isoFormat('Y-M-D');
+
+
+// dd($post['created_at']);
+//    $post->created_at=Carbon::now();
+//    $post->created_at->toDateTimeString();
+//    $date=$post->created_at->toDateTimeString();
+//    dd($date);
+//    $date= $post['created_at']->toDateTimeString();
+   
+//    $date=Carbon::createFromIsoFormat('Y-M-D H:mm:ss',$date);
+   
+//     $date->isoFormat('Y-M-D');
+
+//    $post['created_at']=$date->isoFormat('Y-M-D');
+//    $post['created_at'];
+  }
+        // $carbon::createFromFormat('Y-m-d','2022-10-23')->toDateTimeString();
+        // $date =Carbon::parse('2018-06-15 17:34:15.984512','UTC');
+    //     // echo $date->isoFormat('Y-m-d');
+    //     $date=Carbon::createFromIsoFormat('!YYYY-MMMM-D h:mm:ss a','2019-January-3 6:33:24 pm','UTC');
+    //  echo $date->isoFormat('Y-M-D');
+    
+        // dd($date);
+    
         return view('Posts.index',['posts'=>$posts]);
     }
     // create new post
     function create(){
         $Users = User::all();
+        
 
         return view('Posts.create',[
             'allUsers' => $Users
@@ -71,6 +128,7 @@ return redirect()->route('posts.index');
     // Update new Post
     function update(Request $request,$postId){
         // echo'post Updated';
+        
         $data = $request->except('_token','_method');
         // $data=$request->all();
     
