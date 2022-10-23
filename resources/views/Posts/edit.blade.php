@@ -1,7 +1,9 @@
 @extends('layouts.header')
 @section('container')
-<form class="mx-5 mt-5 border border-1 p-5" method="post" action="/posts">
-    @csrf;
+<form class="mx-5 mt-5 border border-1 p-5" method="post" action="{{route('posts.update',$post['id'])}}">
+    @csrf
+    
+       <input type="hidden" name="_method" value="PATCH">
     <div class="form-group mb-3">
       <label for="exampleInputtitle"><h4>Title</h4></label>
       <input type="text" name="title" class="form-control" id="exampleInputtitle" value="{{$post['title']}}" placeholder="Enter Post Title">
@@ -15,7 +17,7 @@
     </div>
     <div class="form-group mb-3">
         <label for="exampleInputPostcreator">Post Creator</label>
-        <select class="form-control" id="exampleInputPostcreator" name="post_creator" value="{{$post['user_id']}}" placeholder="Post Creator">
+        <select class="form-control" id="exampleInputPostcreator" name="user_id" value="{{$post['user_id']}}" placeholder="Post Creator">
             {{-- <option value="1">Ahmed</option>
             <option value="2">Laila</option>
             <option value="3">Omar</option> --}}

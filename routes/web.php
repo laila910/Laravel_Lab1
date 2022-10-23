@@ -27,6 +27,7 @@ Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show');
 
 // Edit new Post
 Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
+// Route::resource('posts', 'PostController');
 
 // Update New Post
 Route::patch('/posts/{post}',[PostController::class,'update'])->name('posts.update');

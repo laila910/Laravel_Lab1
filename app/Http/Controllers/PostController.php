@@ -63,17 +63,22 @@ return redirect()->route('posts.index');
     function edit($postId){
         $Users = User::all();
         $post = Post::find($postId);
+       
         return view('Posts.edit',[
             'allUsers' => $Users,'post'=>$post
         ]);
     }
     // Update new Post
-    function update(Request $request){
+    function update(Request $request,$postId){
         // echo'post Updated';
-        $data = $request()->all();
-        $op = Post::where('id',$request->id)->update($data);
+        $data = $request->except('_token','_method');
+        // $data=$request->all();
+    
+      
+        // $op = Post::where('id',$request->id)->update($data);
+        $op=Post::where('id',$postId)->update($data);
         if($op){
-            redirect()->route('posts.index');
+           return redirect()->route('posts.index');
         }else{
             echo 'error try again';
         }

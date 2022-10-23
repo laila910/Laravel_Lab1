@@ -29,7 +29,13 @@
           <a href="{{route('posts.show', $post['id'])}}"  style="text-decoration: none;"><x-button type="primary"  message="Show"></x-button></a> 
          
           {{-- <input type="hidden" method="patch"> --}}
-          <a href="{{route('posts.edit', $post['id'])}}" style="text-decoration: none;"><x-button type="secondary" message="Edit"></x-button></a>
+          {{-- <form action="{{route('posts.edit', $post['id'])}}" method="POST">
+           @csrf --}}
+           {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+
+          {{-- <input type="hidden" name="_method" value="PATCH"> --}}
+          <a style="text-decoration:none;" href="{{route('posts.edit', $post['id'])}}"><x-button type="secondary" message="Edit"></x-button></a>
+          {{-- </form> --}}
           <a data-toggle="modal" data-target="#exampleModal{{$post['id']}}" style="text-decoration: none;"><x-button type="danger"   message="delete"></x-button></a>
             {{-- <a href="/posts/{{$post['id']}}/edit" class="btn btn-secondary">Edit</a> --}}
             {{-- <a href="/posts/{{$post['id']}}" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger">Delete</a> --}}
