@@ -67,7 +67,15 @@
         </div>
         @endforeach
       </tbody>
+
     </table>
+    {{$posts->links()}}
+    <style>
+      .w-5{
+        display:none;
+      }
+    </style>
+   
     <!-- Modal -->
 
     @endsection

@@ -19,7 +19,8 @@ class PostController extends Controller
         //  ['id'=>3,'title'=>'post3','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'Ali','createdAt'=>'1/3/2022'],
         //  ['id'=>4,'title'=>'post4','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'mohammed','createdAt'=>'30/1/2022']
         // ];
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts=Post::paginate(6);
     //    dd($posts);
     //    Carbon::Date();
     // $carbon=Carbon::now();
