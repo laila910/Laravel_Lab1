@@ -1,7 +1,7 @@
 @extends('layouts.header')
 @section('container')
-@foreach ($posts as $post)
-@if ($post['id']== $postid)
+
+
 
 <div class="card mt-5 mx-auto mb-5" style="width: 70%;">
     <div class="card-header">
@@ -32,8 +32,7 @@
 
     </ul>
 </div>
-@endif
-@endforeach
+
 
 @endsection
 @extends('layouts.footer')

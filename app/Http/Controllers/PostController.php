@@ -31,7 +31,8 @@ class PostController extends Controller
     function store(Request $request){
         // dd($request->all());
         
-        $data=$request()->all();
+        $data=$request->all();
+        // dd($data);
         Post::create([
             'title' => request()->title,
             'description' => $data['description'],
@@ -54,25 +55,44 @@ return redirect()->route('posts.index');
         //    ];
 
         $post = Post::find($postId);
-        $posts = Post::all();
-           return view('Posts.show',['posts'=>$posts,'postid'=>$postId,$post=>$post]);
+       
+           return view('Posts.show',['post'=>$post]);
        
     }
     // Edit New Post
     function edit($postId){
-
-        return view('Posts.edit');
+        $Users = User::all();
+        $post = Post::find($postId);
+        return view('Posts.edit',[
+            'allUsers' => $Users,'post'=>$post
+        ]);
     }
     // Update new Post
-    function update(Request $request,$postId){
+    function update(Request $request){
         // echo'post Updated';
-        redirect()->route('posts.index');
+        $data = $request()->all();
+        $op = Post::where('id',$request->id)->update($data);
+        if($op){
+            redirect()->route('posts.index');
+        }else{
+            echo 'error try again';
+        }
+        
+
     }
     // Delete Post
     function destroy($postId){
         // echo 'post deleted';
         // return Redirect::route('posts.index');
+        $op = Post::where('id',$postId)->delete();
+
+      if($op){
+          
+          return redirect()->route('posts.index');
+      }else{
+          $message = "error try again";
+          dd($message);
+      }
         
-        redirect()->route('posts.index');
     }
 }

@@ -29,7 +29,10 @@ Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show');
 Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
 
 // Update New Post
-Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update');
+Route::patch('/posts/{post}',[PostController::class,'update'])->name('posts.update');
 
 // Delete New Post
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');//{{route(name of route)}} in blade
+
+// Route::resource('posts', 'PostController');
+

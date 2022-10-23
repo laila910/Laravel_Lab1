@@ -19,7 +19,7 @@
             <option value="2">Laila</option>
             <option value="3">Omar</option> --}}
             @foreach ($allUsers as $user)
-            <option value="{{$user->id}}">{{ $user->name }}</option>
+               <option value="{{$user->id}}">{{ $user->name }}</option>
             @endforeach
         </select>
       </div>
