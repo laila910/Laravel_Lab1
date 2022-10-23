@@ -24,6 +24,29 @@
  8. Add CURD comments inside show post page using polymorphic relation
   https://laravel.com/docs/master/eloquent-relationships#polymorphic-relationships … don’t
   overengineer this one and use ajax requests … just simple form submissions.
+  - Note: posts:
+      id
+      title
+      description,
+      user_id
+  - posts_comments:
+      id
+      post_id
+      comment
+      date
+  - Note: Relations:
+    posts:
+      id
+      title
+      description,
+      user_id
+    posts_comments:
+    id
+    commentable_id
+    commentable_type
+    date
+    body
+
  9. Add restore button on index page to restore deleted posts you will need to use soft delete
   https://laravel.com/docs/master/eloquent#soft-deleting
  10. create Accessor Method inside Post Model that returns human readable carbon to be used
@@ -37,3 +60,4 @@
    first check this video to understand what is livewire
    then check this livewire comments component video in case it may be helpful
 # Note: Disclaimer: livewire is so powerful to give you the feel of SPA without the complexity of frontend frameworks .but it has some limitations we can discuss this more in next lecture
+

@@ -5,6 +5,8 @@ namespace Carbon\Carbon;
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comment;
+
 use App\Models\User;
 
 
@@ -113,9 +115,17 @@ return redirect()->route('posts.index');
         //    ];
 
         $post = Post::find($postId);
+        
+//         foreach($post->comment as $comment)
+//          {
+//    dd($comment);
+//         }
+$comments=Comment::where('commentable_id',$postId)->get();
+
        
-           return view('Posts.show',['post'=>$post]);
-       
+
+        return view('Posts.show',['post'=>$post,'comments'=>$comments]);
+
     }
     // Edit New Post
     function edit($postId){
