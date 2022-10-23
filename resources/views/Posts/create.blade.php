@@ -14,10 +14,13 @@
     </div>
     <div class="form-group mb-3">
         <label for="exampleInputPostcreator">Post Creator</label>
-        <select class="form-control" id="exampleInputPostcreator" name="postcreator" placeholder="Post Creator">
-            <option value="1">Ahmed</option>
+        <select class="form-control" id="exampleInputPostcreator" name="post_creator" placeholder="Post Creator">
+            {{-- <option value="1">Ahmed</option>
             <option value="2">Laila</option>
-            <option value="3">Omar</option>
+            <option value="3">Omar</option> --}}
+            @foreach ($allUsers as $user)
+            <option value="{{$user->id}}">{{ $user->name }}</option>
+            @endforeach
         </select>
       </div>
     <button type="submit" class="btn btn-primary mb-3">Add</button>

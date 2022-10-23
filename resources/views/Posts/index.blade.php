@@ -2,7 +2,7 @@
 @extends('layouts.header')
 @section('container')
     {{-- Content Start --}}
-    <a href="/posts/create" class="btn btn-primary mt-5">Add New Product</a>
+    <a href="{{route('posts.create')}}" class="btn btn-primary mt-5">Add New Post</a>
  
         
     <table class="table container mt-5">
@@ -21,13 +21,14 @@
         <tr>
           <th scope="row">{{$post['id']}}</th>
           <td>{{$post['title']}}</td>
-          <td>{{$post['postedBy']}}</td>
-          <td>{{$post['createdAt']}}</td>
+          {{-- <td>{{$post['postedBy']}}</td> --}}
+          <td>{{$post->user ? $post->user->name : 'Not Defined'}}</td>
+          <td>{{$post['created_at']}}</td>
           <td>
             {{-- <a href="/posts/{{$post['id']}}" class="btn btn-primary">View</a> --}}
-          <a href="/posts/{{$post['id']}}"><x-button type="primary"  message="Show"></x-button></a>
-          <a href="/posts/{{$post['id']}}/edit"><x-button type="secondary" message="Edit"></x-button></a>
-  <a href="/posts/{{$post['id']}}"><x-button type="danger"  data-toggle="modal" data-target="#exampleModal" message="delete"></x-button></a>
+          <a href="{{route('posts.show', $post['id'])}}"  style="text-decoration: none;"><x-button type="primary"  message="Show"></x-button></a> 
+          <a href="{{route('posts.edit', $post['id'])}}" style="text-decoration: none;"><x-button type="secondary" message="Edit"></x-button></a>
+          <a href="{{route('posts.destroy', $post['id'])}}" style="text-decoration: none;"><x-button type="danger"  data-toggle="modal" data-target="#exampleModal" message="delete"></x-button></a>
    
 
             {{-- <a href="/posts/{{$post['id']}}/edit" class="btn btn-secondary">Edit</a> --}}

@@ -21,9 +21,12 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        <h5><span class="text-black">Name:</span><span class="text-muted">{{$post['postedBy']}}</span></h5>
-        <h5><span class="text-black">Email:</span><span class="text-muted">laila@gmail.com</span></h5>
-        <h5><span class="text-black">Created At:</span><span class="text-muted">{{$post['createdAt']}}</span></h5>
+        <h5><span class="text-black">Name:</span><span class="text-muted">
+          {{-- {{$post['postedBy']}} --}}
+          {{$post->user ? $post->user->name : 'Not Defined'}}
+        </span></h5>
+        <h5><span class="text-black">Email:</span><span class="text-muted">{{$post->user ? $post->user->email: 'Not Defined'}}</span></h5>
+        <h5><span class="text-black">Created At:</span><span class="text-muted">{{$post['created_at']}}</span></h5>
       </li>
    
 
