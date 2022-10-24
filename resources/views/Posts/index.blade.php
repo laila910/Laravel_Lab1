@@ -9,11 +9,11 @@
     </div>
 
 @endif
-    <a href="{{route('posts.create')}}" class="btn btn-primary mt-5">Add New Post</a>
+    <a href="{{route('posts.create')}}" class="btn btn-primary mt-5 mb-2">Add New Post</a>
     <div class="card">
       <div class="card-header">
           <div class="row">
-              <div class="col col-md-6">Sample Data</div>
+              <div class="col col-md-6">Posts Data </div>
               <div class="col col-md-6 text-right">
                   @if(request()->has('view_deleted'))
 
