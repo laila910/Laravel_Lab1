@@ -1,5 +1,13 @@
 @extends('layouts.header')
 @section('container')
+
+@if(session()->has('failed'))
+
+    <div class="alert  mt-2 alert-success">
+        {{ session()->get('failed') }}
+    </div>
+
+@endif
 @if ($errors->any())
     <div class="alert mt-2 alert-danger">
         <div>

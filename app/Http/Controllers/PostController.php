@@ -31,6 +31,7 @@ class PostController extends Controller
     }
     // create new post
     function create(){
+
         $Users = User::all();
         
 
@@ -53,6 +54,10 @@ class PostController extends Controller
         //     'title.unique'=>'* Post Title is already exist :('
         // ]);
         $data=$request->all();
+      if(!User::find($request->user_id)){
+          return back()->with('failed','Invalid Data');
+      }else{
+     
         // dd($data);
         Post::create([
             'title' => request()->title,
@@ -63,6 +68,7 @@ class PostController extends Controller
 //    return back()->with($message);
 // return redirect(url('/posts'));
 return redirect()->route('posts.index');
+    }
 }
     // show data of post
     function show($postId){
