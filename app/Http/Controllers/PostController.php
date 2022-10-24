@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Http\Requests\StoreAndUpdateStoreRequest;
+
 
 use App\Models\User;
 
@@ -32,14 +34,24 @@ class PostController extends Controller
         $Users = User::all();
         
 
+
         return view('Posts.create',[
             'allUsers' => $Users
         ]);
     }
     // store new post
-    function store(Request $request){
-        // dd($request->all());
-        
+    function store(StoreAndUpdateStoreRequest $request){
+       
+        // $data= request()->validate([
+        //     'title' => ['required','unique:posts', 'min:3'],
+        //     'description' => ['required', 'min:5'],
+        // ],[
+        //     'title.required' => '* Post Title is Required :(',
+        //     'title.min' => '* Post Title must be greater than 3 characters ',
+        //     'description.required'=>'* Post Description is Required :(',
+        //     'description.min'=>'* Post Description Must be greater Than 5 characters',
+        //     'title.unique'=>'* Post Title is already exist :('
+        // ]);
         $data=$request->all();
         // dd($data);
         Post::create([
@@ -86,9 +98,8 @@ $comments=Comment::where('commentable_id',$postId)->get();
         ]);
     }
     // Update new Post
-    function update(Request $request,$postId){
+    function update(StoreAndUpdateStoreRequest $request,$postId){
         // echo'post Updated';
-        
         $data = $request->except('_token','_method');
         // $data=$request->all();
     

@@ -1,11 +1,20 @@
 @extends('layouts.header')
 @section('container')
+@if ($errors->any())
+    <div class="alert mt-2 alert-danger">
+        <div>
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    </div>
+@endif
+
 <form class="mx-5 mt-5 border border-1 p-5" method="post" action="/posts">
-    @csrf;
+    @csrf
     <div class="form-group mb-3">
       <label for="exampleInputtitle"><h4>Title</h4></label>
       <input type="text" name="title" class="form-control" id="exampleInputtitle"  placeholder="Enter Post Title">
-     
     </div>
     <div class="form-group mb-3">
       <label for="exampleInputdesc"><h4>Description</h4></label>
