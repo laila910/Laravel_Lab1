@@ -1,5 +1,5 @@
-@extends('layouts.header')
-@section('container')
+@extends('layouts.app')
+@section('content')
 
 @if(session()->has('failed'))
 

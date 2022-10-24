@@ -1,5 +1,5 @@
-@extends('layouts.header')
-@section('container')
+@extends('layouts.app')
+@section('content')
 <form class="mx-5 mt-5 border border-1 p-5" method="post" action="{{route('posts.update',$post['id'])}}">
     @csrf
     
