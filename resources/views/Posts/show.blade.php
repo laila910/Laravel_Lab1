@@ -125,9 +125,7 @@
                     <form action="{{route('comments.destroy',$comment['id'])}}" method="post">
                       @csrf
                       <input type="hidden" name="_method" value="delete">
-                      {{-- <input type="hidden" name="_id" value="{{$post['id']}}"> --}}
-                  
-                       
+                      {{-- <input type="hidden" name="_id" value="{{$post['id']}}"> --}}       
                       <div class="not-empty-record">
                           <button type="submit" class="btn btn-primary">Delete</button>
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>

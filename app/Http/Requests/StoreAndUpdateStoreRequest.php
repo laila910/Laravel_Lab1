@@ -24,8 +24,11 @@ class StoreAndUpdateStoreRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
-        if( count( StoreAndUpdateStoreRequest::segments() ) > 1 ) {     
+    {  
+        // dd(StoreAndUpdateStoreRequest::segments(),$this->method());  to get the method 
+        
+        if( count( StoreAndUpdateStoreRequest::segments() ) > 1 ) {
+            
             $post_id = StoreAndUpdateStoreRequest::segments()[1];
             return [
                 'title' => 'required|min:3|unique:posts,title,' . $post_id,

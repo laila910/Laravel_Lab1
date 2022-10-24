@@ -1,32 +1,27 @@
-
 @extends('layouts.app')
 @section('content')
-    {{-- Content Start --}}
+{{-- session to check post is deleted or not  --}}
     @if(session()->has('success'))
+         <div class="alert alert-success">
+           {{ session()->get('success') }}
+         </div>
+    @endif
+{{-- session ended --}}
+{{-- button to add new post  --}}
+     <a href="{{route('posts.create')}}" class="btn btn-primary mt-5 mb-2">Add New Post</a>
+{{-- end button to add new post --}}
 
-    <div class="alert alert-success">
-        {{ session()->get('success') }}
-    </div>
-
-@endif
-    <a href="{{route('posts.create')}}" class="btn btn-primary mt-5 mb-2">Add New Post</a>
     <div class="card">
       <div class="card-header">
           <div class="row">
               <div class="col col-md-6">Posts Data </div>
               <div class="col col-md-6 text-right">
                   @if(request()->has('view_deleted'))
-
-                  <a href="{{ route('posts.index') }}" class="btn btn-info btn-sm">View All Post</a>
-
-                  <a href="{{ route('post.restore_all') }}" class="btn btn-success btn-sm">Restore All</a>
-
+                      <a href="{{ route('posts.index') }}" class="btn btn-info btn-sm">View All Post</a>
+                      <a href="{{ route('post.restore_all') }}" class="btn btn-success btn-sm">Restore All</a>
                   @else
-
-                  <a href="{{ route('posts.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary btn-sm">View Deleted Post</a>
-                
+                      <a href="{{ route('posts.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary btn-sm">View Deleted Post</a>
                   @endif
-                  
               </div>
           </div>
       </div>
@@ -44,63 +39,60 @@
         </tr>
       </thead>
       <tbody>
-    @if(count($posts) > 0)
+      @if(count($posts) > 0)
         @foreach ($posts as $post)
-      
         <tr>
           <th scope="row">{{$post['id']}}</th>
           <td>{{$post['title']}}</td>
-          {{-- <td>{{$post['postedBy']}}</td> --}}
           <td>{{$post->user ? $post->user->name : 'Laila'}}</td>
-          {{-- <td>{{$post['created_at']->format('Y-m-d')}}</td> --}}
-          {{-- <td>{{$post['created_at']->toDateString()}}</td> --}}
           <td>{{$post->created_at}}</td>
-          {{-- {{$task->created_at->toFormattedDateString()}} --}}
-
           <td> 
-          <a href="{{route('posts.show', $post['id'])}}"  style="text-decoration: none;"><x-button type="primary"  message="Show"></x-button></a> 
-          <a style="text-decoration:none;" href="{{route('posts.edit', $post['id'])}}"><x-button type="secondary" message="Edit"></x-button></a>
-          @if(request()->has('view_deleted'))
-          <a href="{{ route('post.restore', $post->id) }}" class="btn btn-success btn-sm">Restore</a>
-          @else
-          <a data-toggle="modal" data-target="#exampleModal{{$post['id']}}" style="text-decoration: none;"><x-button type="danger"   message="delete"></x-button></a>
-          @endif   
+                <a href="{{route('posts.show', $post['id'])}}"  style="text-decoration: none;"><x-button type="primary"  message="Show"></x-button></a> 
+                <a style="text-decoration:none;" href="{{route('posts.edit', $post['id'])}}"><x-button type="secondary" message="Edit"></x-button></a>
+                 @if(request()->has('view_deleted'))
+                    <a href="{{ route('post.restore', $post->id) }}" class="btn btn-success btn-sm">Restore</a>
+                 @else
+                    <a data-toggle="modal" data-target="#exampleModal{{$post['id']}}" style="text-decoration: none;"><x-button type="danger" message="delete"></x-button></a>
+                    <div class="modal" id="exampleModal{{$post['id']}}" tabindex="-1" role="dialog" >
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                           {{$post['title']}}
+                          </div>
+                          <div class="modal-footer">
+                            <form action="{{route('posts.destroy',$post['id'])}}" method="post">
+                              @csrf
+                              <input type="hidden" name="_method" value="delete">
+                               
+                              <div class="not-empty-record">
+                                  <button type="submit" class="btn btn-primary">Delete</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                              </div>
+                          </form>
+                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <a  href="/posts" class="btn btn-primary">yes</a> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                 @endif   
           </td>
-        </tr>
-        <div class="modal" id="exampleModal{{$post['id']}}" tabindex="-1" role="dialog" >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-               {{$post['title']}}
-              </div>
-              <div class="modal-footer">
-                <form action="{{route('posts.destroy',$post['id'])}}" method="post">
-                  @csrf
-                  <input type="hidden" name="_method" value="delete">
-                   
-                  <div class="not-empty-record">
-                      <button type="submit" class="btn btn-primary">Delete</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
-                  </div>
-              </form>
-                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <a  href="/posts" class="btn btn-primary">yes</a> --}}
-              </div>
-            </div>
-          </div>
-        </div>
-    @endforeach
-    @else
+          </tr>
+         
+     
+        @endforeach
+      @else
         <tr>
           <td colspan="4" class="text-center">No Post Found</td>
       </tr>
-      @endif
+     @endif
     </tbody>
     </table>
   </div>

@@ -31,15 +31,14 @@ Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edi
 // Route::resource('posts', 'PostController');
 
 // Update New Post
-Route::patch('/posts/{post}',[PostController::class,'update'])->name('posts.update')->middleware('auth');
+Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update')->middleware('auth');
 
 // Delete New Post
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy')->middleware('auth');//{{route(name of route)}} in blade
+
 Route::get('post/restore/one/{id}', [PostController::class, 'restore'])->name('post.restore')->middleware('auth');
 
 Route::get('post/restore_all', [PostController::class, 'restore_all'])->name('post.restore_all')->middleware('auth');
-
-//************ */
 // store new Comment
 Route::post('/comments',[CommentController::class,'store'])->name('comments.store')->middleware('auth');
 // Edit new Comment
@@ -52,4 +51,4 @@ Route::delete('/comments/{comment}',[CommentController::class,'destroy'])->name(
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');

@@ -3,7 +3,7 @@
 <form class="mx-5 mt-5 border border-1 p-5" method="post" action="{{route('posts.update',$post['id'])}}">
     @csrf
     
-       <input type="hidden" name="_method" value="PATCH">
+       <input type="hidden" name="_method" value="PUT">
     <div class="form-group mb-3">
       <label for="exampleInputtitle"><h4>Title</h4></label>
       <input type="text" name="title" class="form-control" id="exampleInputtitle" value="{{$post['title']}}" placeholder="Enter Post Title">

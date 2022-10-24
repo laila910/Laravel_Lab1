@@ -54,7 +54,7 @@ class PostController extends Controller
         //     'title.unique'=>'* Post Title is already exist :('
         // ]);
         $data=$request->all();
-      if(!User::find($request->user_id)){
+      if(!User::find($request->user_id)){ //check with validation (exist :) 
           return back()->with('failed','Invalid Data');
       }else{
      
@@ -122,12 +122,8 @@ $comments=Comment::where('commentable_id',$postId)->get();
     }
     // Delete Post
     function destroy($postId){
-        // echo 'post deleted';
-        // return Redirect::route('posts.index');
         $op = Post::where('id',$postId)->delete();
-
       if($op){
-          
         //   return redirect()->route('posts.index');
         return back()->with('success', 'Post Deleted successfully');
       }else{
@@ -139,14 +135,11 @@ $comments=Comment::where('commentable_id',$postId)->get();
     public function restore($id)
     {
         Post::withTrashed()->find($id)->restore();
-
         return back()->with('success', 'Post Restore successfully');
     }
-
     public function restore_all()
     {
         Post::onlyTrashed()->restore();
-
         return back()->with('success', 'All Post Restored successfully');
     }
 }

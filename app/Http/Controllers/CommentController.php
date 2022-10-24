@@ -22,8 +22,9 @@ class CommentController extends Controller
     }
     // update comment
     function update(Request $request,$commentId){
-      
+     
         $data = $request->except('_token','_method','_id');
+      
         $op=Comment::where('id',$commentId)->update($data);
         $post = Post::find($request->_id);
        
