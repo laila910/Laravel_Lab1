@@ -26,5 +26,5 @@
     <button type="submit" class="btn btn-primary mb-3">Add</button>
   </form>
 @endsection
-@extends('layouts.footer')
+
     

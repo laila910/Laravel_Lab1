@@ -51,9 +51,10 @@
           <th scope="row">{{$post['id']}}</th>
           <td>{{$post['title']}}</td>
           {{-- <td>{{$post['postedBy']}}</td> --}}
-          <td>{{$post->user ? $post->user->name : 'Not Defined'}}</td>
+          <td>{{$post->user ? $post->user->name : 'Laila'}}</td>
           {{-- <td>{{$post['created_at']->format('Y-m-d')}}</td> --}}
-          <td>{{$post['created_at']->toDateString()}}</td>
+          {{-- <td>{{$post['created_at']->toDateString()}}</td> --}}
+          <td>{{$post->created_at}}</td>
           {{-- {{$task->created_at->toFormattedDateString()}} --}}
 
           <td> 
@@ -120,7 +121,5 @@
  
     {{-- Content End --}}
  
-    {{-- Footer Start --}}
-    @extends('layouts.footer')
-    {{-- Footer End --}}
+   
    

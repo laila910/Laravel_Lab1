@@ -23,10 +23,10 @@
       <li class="list-group-item">
         <h5><span class="text-black">Name:</span><span class="text-muted">
           {{-- {{$post['postedBy']}} --}}
-          {{$post->user ? $post->user->name : 'Not Defined'}}
+          {{$post->user ? $post->user->name : 'Laila'}}
         </span></h5>
-        <h5><span class="text-black">Email:</span><span class="text-muted">{{$post->user ? $post->user->email: 'Not Defined'}}</span></h5>
-        <h5><span class="text-black">Created At:</span><span class="text-muted">{{$post['created_at']}}</span></h5>
+        <h5><span class="text-black">Email:</span><span class="text-muted">{{$post->user ? $post->user->email: 'laila@gmail.com'}}</span></h5>
+        <h5><span class="text-black">Created At:</span><span class="text-muted">{{ $post->created_at}}</span></h5>
       </li>
    
 
@@ -36,6 +36,21 @@
      {{-- working with comment here... --}}
      <hr>
   <div class="container">
+   
+    <div>
+      
+      <form class="mx-5 mt-5 border border-1 p-5" action="/comments" method="post">
+        @csrf
+        <input type="hidden" name="_id" value="{{$post['id']}}" >
+        <div class="form-group mb-3">
+          <label for="exampleInputComment"><h4>Add New Comment</h4></label>
+           <input type="text" name="body" class="form-control" id="exampleInputComment" placeholder="drop your comment here :)">
+        </div>
+           <button  class="btn btn-primary" type="submit">Submit</button>
+      </form>
+
+    </div>
+    <hr>
     <div class="card bg-warning" style="width: 80%;">
       <div class="card-header">
         Post Comments
@@ -43,7 +58,7 @@
 
       <ul class="list-group list-group-flush">
         @if (!count($comments))
-          <p>No comments for this post yet :)</p>
+          <p>No comments for this post yet</p>
         @endif
          @foreach($comments as $comment)
            <li class="list-group-item">{{$comment['body']}}</li>
@@ -123,33 +138,15 @@
               </div>
             </div>
             {{-- model end --}}
-             &nbsp; &nbsp;
+            
              {{-- <form class="d-inline" action="/comments" method="post">
               @csrf
                  <button  class="btn btn-primary" type="submit">Delete</button>
              </form> --}}
            </div>
-           <hr>
-         
-
+           
          @endforeach
       </ul>
     </div>
-    <div>
-      
-      <form class="mx-5 mt-5 border border-1 p-5" action="/comments" method="post">
-        @csrf
-        <input type="hidden" name="_id" value="{{$post['id']}}" >
-        <div class="form-group mb-3">
-          <label for="exampleInputComment"><h4>Add New Comment</h4></label>
-           <input type="text" name="body" class="form-control" id="exampleInputComment" placeholder="drop your comment here :)">
-        </div>
-           <button  class="btn btn-primary" type="submit">Submit</button>
-      </form>
-
-    </div>
   </div>
-
-
 @endsection
-@extends('layouts.footer')

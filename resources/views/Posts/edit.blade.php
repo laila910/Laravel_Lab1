@@ -32,4 +32,3 @@
     <button type="submit" class="btn btn-primary mb-3">Edit</button>
   </form>
 @endsection
-@extends('layouts.footer')
