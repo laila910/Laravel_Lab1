@@ -14,69 +14,18 @@ use App\Models\User;
 class PostController extends Controller
 {
     //show all posts
-    function index() {
-        // $posts=[
-        //  ['id'=>1,'title'=>'post1','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'laila','createdAt'=>'15/1/2000'],
-        //  ['id'=>2,'title'=>'post2','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'ahmed','createdAt'=>'15/9/2022'],
-        //  ['id'=>3,'title'=>'post3','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'Ali','createdAt'=>'1/3/2022'],
-        //  ['id'=>4,'title'=>'post4','description'=>'with supporting text below as a natural lead-in additional content','postedBy'=>'mohammed','createdAt'=>'30/1/2022']
-        // ];
-        // $posts = Post::all();
+    function index(Request $request) {
+       
         $posts=Post::paginate(6);
-    //    dd($posts);
-    //    Carbon::Date();
-    // $carbon=Carbon::now();
-    //   $year=2022;
-    //   $month=10;
-    //   $day=23;
-    //   $tz = 'Europe/Madrid';
-  foreach($posts as $post){
-    // $post['created_at']=$post->created_at;
-
-    //  $post['created_at'] = Carbon::parse($post->created_at);
-      
-//    $post['created_at']= $post['created_at']->format('Y-m-d');
- 
-// echo $post['created_at'];
-    //  echo $date;
-    //  $post->created_at=$date;
-    //  dd($post->created_at);
-// $date=Carbon::now();
-// $date=$post['created_at'];
-// $date=$date->isoFormat('Y-M-D');
-// $post['created_at']=$date;
-// $date;
-// dd($post['created_at']);
-
-// $post['created_at']=$post['created_at']->isoFormat('Y-M-D');
-
-// dd($post['created_at']->isoFormat('Y-M-D'));
-// $post['created_at']=$post['created_at']->isoFormat('Y-M-D');
-
-
-// dd($post['created_at']);
-//    $post->created_at=Carbon::now();
-//    $post->created_at->toDateTimeString();
-//    $date=$post->created_at->toDateTimeString();
-//    dd($date);
-//    $date= $post['created_at']->toDateTimeString();
-   
-//    $date=Carbon::createFromIsoFormat('Y-M-D H:mm:ss',$date);
-   
-//     $date->isoFormat('Y-M-D');
-
-//    $post['created_at']=$date->isoFormat('Y-M-D');
-//    $post['created_at'];
-  }
-        // $carbon::createFromFormat('Y-m-d','2022-10-23')->toDateTimeString();
-        // $date =Carbon::parse('2018-06-15 17:34:15.984512','UTC');
-    //     // echo $date->isoFormat('Y-m-d');
-    //     $date=Carbon::createFromIsoFormat('!YYYY-MMMM-D h:mm:ss a','2019-January-3 6:33:24 pm','UTC');
-    //  echo $date->isoFormat('Y-M-D');
+        // $posts=Post::all();
     
-        // dd($date);
+        if($request->has('view_deleted'))
+        {
+            
+            $posts = Post::onlyTrashed()->get();
+        }
     
-        return view('Posts.index',['posts'=>$posts]);
+        return view('Posts.index',compact('posts'));
     }
     // create new post
     function create(){
@@ -162,11 +111,25 @@ $comments=Comment::where('commentable_id',$postId)->get();
 
       if($op){
           
-          return redirect()->route('posts.index');
+        //   return redirect()->route('posts.index');
+        return back()->with('success', 'Post Deleted successfully');
       }else{
           $message = "error try again";
           dd($message);
       }
         
+    }
+    public function restore($id)
+    {
+        Post::withTrashed()->find($id)->restore();
+
+        return back()->with('success', 'Post Restore successfully');
+    }
+
+    public function restore_all()
+    {
+        Post::onlyTrashed()->restore();
+
+        return back()->with('success', 'All Post Restored successfully');
     }
 }

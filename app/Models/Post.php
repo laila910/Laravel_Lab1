@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
@@ -9,16 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    
-
+    use SoftDeletes;
     use HasFactory;
     protected $fillable=[
         'title',
         'description',
-        'user_id',
+        'user_id'
         
     ];
     
+    protected $dates = ['deleted_at'];
    
     public function user()
     {

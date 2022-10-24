@@ -35,6 +35,10 @@ Route::patch('/posts/{post}',[PostController::class,'update'])->name('posts.upda
 
 // Delete New Post
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');//{{route(name of route)}} in blade
+Route::get('post/restore/one/{id}', [PostController::class, 'restore'])->name('post.restore');
+
+Route::get('post/restore_all', [PostController::class, 'restore_all'])->name('post.restore_all');
+
 //************ */
 // store new Comment
 Route::post('/comments',[CommentController::class,'store'])->name('comments.store');
