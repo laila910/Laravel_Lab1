@@ -49,3 +49,7 @@ Route::put('/comments/{comment}',[CommentController::class,'update'])->name('com
 // Delete New Comment
 Route::delete('/comments/{comment}',[CommentController::class,'destroy'])->name('comments.destroy');//{{route(name of route)}} in blade
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

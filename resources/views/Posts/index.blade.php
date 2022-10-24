@@ -1,6 +1,6 @@
 
-@extends('layouts.header')
-@section('container')
+@extends('layouts.app')
+@section('content')
     {{-- Content Start --}}
     @if(session()->has('success'))
 
