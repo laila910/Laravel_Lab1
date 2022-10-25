@@ -54,21 +54,22 @@ class PostController extends Controller
         //     'title.unique'=>'* Post Title is already exist :('
         // ]);
         $data=$request->all();
-      if(!User::find($request->user_id)){ //check with validation (exist :) 
-          return back()->with('failed','Invalid Data');
-      }else{
+    //   if(!User::find($request->user_id)){ //check with validation (exist :) 
+    //       return back()->with('failed','Invalid Data');
+    //   }else{
      
         // dd($data);
-        Post::create([
+     Post::create([
             'title' => request()->title,
             'description' => $data['description'],
             'user_id' => $data['post_creator'],
         ]);
+     
     // return redirect(url('/posts'));
 //    return back()->with($message);
 // return redirect(url('/posts'));
 return redirect()->route('posts.index');
-    }
+    // }
 }
     // show data of post
     function show($postId){

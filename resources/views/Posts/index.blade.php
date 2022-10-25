@@ -35,6 +35,7 @@
           <th scope="col">Title</th>
           <th scope="col">Posted By</th>
           <th scope="col">Created At</th>
+          <th scope="col">Slug</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -46,6 +47,7 @@
           <td>{{$post['title']}}</td>
           <td>{{$post->user ? $post->user->name : 'Laila'}}</td>
           <td>{{$post->created_at}}</td>
+          <td>{{$post->slug}}</td>
           <td> 
                 <a href="{{route('posts.show', $post['id'])}}"  style="text-decoration: none;"><x-button type="primary"  message="Show"></x-button></a> 
                 <a style="text-decoration:none;" href="{{route('posts.edit', $post['id'])}}"><x-button type="secondary" message="Edit"></x-button></a>

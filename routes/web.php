@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
+// use Auth\LoginController;
+Route::get('/',function(){
+    return view('welcome');
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,3 +55,5 @@ Route::delete('/comments/{comment}',[CommentController::class,'destroy'])->name(
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+// Route::get('/logout', [Auth\LoginController::class,'logout'])->name('logout');
+

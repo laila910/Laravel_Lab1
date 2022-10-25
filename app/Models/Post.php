@@ -2,7 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 use Carbon\Carbon;
 
@@ -15,15 +15,26 @@ class Post extends Model
 {
     use SoftDeletes;
     use HasFactory;
+    use Sluggable;
     protected $fillable=[
         'title',
         'description',
-        'user_id'
+        'user_id',
+        'slug'
+       
+      
         
     ];
     
     protected $dates = ['deleted_at'];
-   
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
    
     public function user()
     {
