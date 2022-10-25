@@ -2,11 +2,9 @@
 @section('content')
 
 @if(session()->has('failed'))
-
     <div class="alert  mt-2 alert-success">
         {{ session()->get('failed') }}
     </div>
-
 @endif
 @if ($errors->any())
     <div class="alert mt-2 alert-danger">
@@ -36,7 +34,9 @@
             <option value="2">Laila</option>
             <option value="3">Omar</option> --}}
             @foreach ($allUsers as $user)
-               <option value="{{$user->id}}">{{ $user->name }}</option>
+            @if(Auth::user()->id==$user->id)
+               <option value="{{$user->id}}" selected>{{ $user->name }}</option>
+            @endif
             @endforeach
         </select>
       </div>

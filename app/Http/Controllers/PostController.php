@@ -1,75 +1,52 @@
 <?php
 namespace Carbon\Carbon;
 
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Http\Requests\StoreAndUpdateStoreRequest;
-
-
 use App\Models\User;
-
-
-
 class PostController extends Controller
 {
     //show all posts
-    function index(Request $request) {
-       
+    function index(Request $request) { 
         $posts=Post::paginate(6);
         // $posts=Post::all();
-    
         if($request->has('view_deleted'))
-        {
-            
+        {  
             $posts = Post::onlyTrashed()->get();
         }
-    
         return view('Posts.index',compact('posts'));
     }
     // create new post
     function create(){
-
         $Users = User::all();
-        
-
-
         return view('Posts.create',[
             'allUsers' => $Users
         ]);
     }
     // store new post
     function store(StoreAndUpdateStoreRequest $request){
-       
-        // $data= request()->validate([
-        //     'title' => ['required','unique:posts', 'min:3'],
-        //     'description' => ['required', 'min:5'],
-        // ],[
-        //     'title.required' => '* Post Title is Required :(',
-        //     'title.min' => '* Post Title must be greater than 3 characters ',
-        //     'description.required'=>'* Post Description is Required :(',
-        //     'description.min'=>'* Post Description Must be greater Than 5 characters',
-        //     'title.unique'=>'* Post Title is already exist :('
-        // ]);
         $data=$request->all();
-    //   if(!User::find($request->user_id)){ //check with validation (exist :) 
-    //       return back()->with('failed','Invalid Data');
-    //   }else{
-     
-        // dd($data);
-     Post::create([
-            'title' => request()->title,
-            'description' => $data['description'],
-            'user_id' => $data['post_creator'],
-        ]);
+    
+      if(!User::find($request->post_creator)){ //check with validation (exist :) 
+          return back()->with('failed','Invalid Data');
+      }else{
+            Post::create([
+                'title' => request()->title,
+                'description' => $data['description'],
+                'user_id' => $data['post_creator'],
+            ]);
+            return redirect()->route('posts.index');
+        
+    
      
     // return redirect(url('/posts'));
 //    return back()->with($message);
 // return redirect(url('/posts'));
-return redirect()->route('posts.index');
-    // }
+
+    }
 }
     // show data of post
     function show($postId){
