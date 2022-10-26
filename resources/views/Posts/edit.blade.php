@@ -6,7 +6,7 @@
      
     <div class="form-group mb-3">
       <label for="exampleInputtitle"><h4>Title</h4></label>
-      <input type="text" name="title" class="form-control" id="exampleInputtitle" value="{{$post['title']}}" placeholder="Enter Post Title">
+      <input type="text" name="title" class="form-control" id="exampleInputtitle" value="{{old('title', $post->title)}}" placeholder="Enter Post Title">
     </div>
     <div class="form-group mb-3">
       <label for="exampleInputdesc"><h4>Description</h4></label>
