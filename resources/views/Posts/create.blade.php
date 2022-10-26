@@ -30,13 +30,8 @@
     <div class="form-group mb-3">
         <label for="exampleInputPostcreator">Post Creator</label>
         <select class="form-control" id="exampleInputPostcreator" name="post_creator" placeholder="Post Creator">
-            {{-- <option value="1">Ahmed</option>
-            <option value="2">Laila</option>
-            <option value="3">Omar</option> --}}
             @foreach ($allUsers as $user)
-            @if(Auth::user()->id==$user->id)
-               <option value="{{$user->id}}" selected>{{ $user->name }}</option>
-            @endif
+               <option value="{{$user->id}}">{{ $user->name }}</option>
             @endforeach
         </select>
       </div>

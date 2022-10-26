@@ -32,7 +32,8 @@ class ProneOldPostsJob implements ShouldQueue
      */
     public function handle()
     {
+       
         Post::where('created_at', '<=', Carbon::now()->subYears(2))->delete();//to delete posts from 2 years :)
-
+        
     }
 }

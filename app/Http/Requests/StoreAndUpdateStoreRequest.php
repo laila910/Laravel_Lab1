@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Post;
+use App\Models\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,23 +33,28 @@ class StoreAndUpdateStoreRequest extends FormRequest
             $post_id = StoreAndUpdateStoreRequest::segments()[1];
             return [
                 'title' => 'required|min:3|unique:posts,title,' . $post_id,
-                'description' => 'required|min:5,description,' . $post_id,   
+                'description' => 'required|min:5,description,' . $post_id,  
+                'user_id' =>'exists:users,user_id'.$post_id
             ];
     }else{
         return [
             'title' => ['required','min:3','unique:posts'],
-            'description' => ['required','min:5'],   
+            'description' => ['required','min:5'],  
+            'user_id'=>['exists:users'] 
         ]; 
     }
     }
     public function messages()
     {
         return [
+            // exists:users
             'title.required' => '* Post Title is Required :(',
             'title.min' => '* Post Title must be greater than 3 characters ',
             'description.required'=>'* Post Description is Required :(',
             'description.min'=>'* Post Description Must be greater Than 5 characters',
-            'title.unique'=>'* Post Title is already exist :('
+            'title.unique'=>'* Post Title is already exist :(',
+           
+
         ];
     }
 }

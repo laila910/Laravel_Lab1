@@ -21,10 +21,10 @@ Route::get('/',function(){
 Route::get('/posts', [PostController::class,'index'])->name('posts.index')->middleware('auth');
 
 // create new post
-Route::get('/posts/create',[PostController::class,'create'])->name('posts.create')->middleware(['auth']);
+Route::get('/posts/create',[PostController::class,'create'])->name('posts.create')->middleware('auth');
 
 // store new post
-Route::post('/posts',[PostController::class,'store'])->name('posts.store');
+Route::post('/posts',[PostController::class,'store'])->name('posts.store')->middleware('auth');
 
 // show data of post
 Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show')->middleware('auth');
@@ -50,6 +50,10 @@ Route::get('comments/{comment}/edit',[CommentController::class,'edit'])->name('c
 Route::put('/comments/{comment}',[CommentController::class,'update'])->name('comments.update')->middleware('auth');
 // Delete New Comment
 Route::delete('/comments/{comment}',[CommentController::class,'destroy'])->name('comments.destroy')->middleware('auth');//{{route(name of route)}} in blade
+
+
+//ajax
+Route::get('/ajax/{id}', [PostsController::class, 'ajax'])->name('posts.ajax')->middleware('auth');
 
 
 Auth::routes();
