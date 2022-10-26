@@ -2,8 +2,11 @@
 namespace Carbon\Carbon;
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Comment;
 use App\Http\Requests\StoreAndUpdateStoreRequest;
 use App\jobs\ProneOldPostsJob;
@@ -30,12 +33,15 @@ class PostController extends Controller
     }
     // store new post
     function store(StoreAndUpdateStoreRequest $request){
-        $data=$request->all();    
+        $image=time().'.'.$request->image->extension();
+        // $data=$request->all();     
             Post::create([
                 'title' => request()->title,
-                'description' => $data['description'],
-                'user_id' => $data['post_creator'],
-            ]);
+                'description' => $request->description,
+                'user_id' => $request->post_creator,
+                'image'=>$image
+            ]); 
+            $request->image->move(public_path('uploads'), $image);  
             return redirect()->route('posts.index');   
      }
     // show data of post
@@ -48,19 +54,45 @@ class PostController extends Controller
     function edit($postId){
         $Users = User::all();
         $post = Post::find($postId);
+
         return view('Posts.edit',[
             'allUsers' => $Users,'post'=>$post
         ]);
     }
     // Update new Post
-    function update(StoreAndUpdateStoreRequest $request,$postId){
-        $data = $request->except('_token','_method');
-        $op=Post::where('id',$postId)->update($data);
-        if($op){
-           return redirect()->route('posts.index');
+    function update(StoreAndUpdateStoreRequest $request,$postId){   
+        // dd($request->all());
+        if ($request->image) {
+            Storage::delete('uploads/' . $request->oldImage);
+            $imageName = time() . '.' . $request->image->extension();
+           $op= Post::where('id',$postId)->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => $request->post_creator,
+                'image'=>$imageName
+            ]);
+            $request->image->move(public_path('uploads'), $imageName);
+            if($op){
+                return redirect()->route('posts.index');
+             }else{
+                 echo 'error try again';
+             } 
         }else{
-            echo 'error try again';
-        } 
+            $op=Post::where('id',$postId)->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => $request->post_creator,
+                'image'=>$request->oldImage
+            ]);
+            
+        if($op){
+            return redirect()->route('posts.index');
+         }else{
+             echo 'error try again';
+         } 
+        }
+      
+      
     }
     // Delete Post
     function destroy($postId){

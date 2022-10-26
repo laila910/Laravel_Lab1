@@ -29,18 +29,23 @@ class StoreAndUpdateStoreRequest extends FormRequest
         // dd(StoreAndUpdateStoreRequest::segments(),$this->method());  to get the method 
         
         if( count( StoreAndUpdateStoreRequest::segments() ) > 1 ) {
-            
+          
             $post_id = StoreAndUpdateStoreRequest::segments()[1];
+            // dd($this->post);
             return [
-                'title' => 'required|min:3|unique:posts,title,' . $post_id,
-                'description' => 'required|min:5,description,' . $post_id,  
-                'user_id' =>'exists:users,user_id'.$post_id
+                'title' => 'required|min:3|unique:posts,title',
+                'description' => 'required|min:5,description', 
+                'user_id' =>'exists:posts,user_id',
+                'image'=>"image|mimes:png,jpg|max:2048,image"
+                // 'postImage'=>'image|mimes:jpg,png|max:2048,postImage'.$post_id
             ];
     }else{
         return [
             'title' => ['required','min:3','unique:posts'],
             'description' => ['required','min:5'],  
-            'user_id'=>['exists:users'] 
+            'user_id'=>['exists:users'] ,
+            'image'=>['image','mimes:png,jpg','max:2048']
+            
         ]; 
     }
     }

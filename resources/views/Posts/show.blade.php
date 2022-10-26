@@ -9,6 +9,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
+        <h5 style="width: 10%"><img src="{{asset('uploads/'.$post->image)}}" width="100%" class="rounded" alt=""></h5>
         <h5><span class="text-black">Title:</span><span class="text-muted">{{$post['title']}}</span></h5>
         <h5><span class="text-black">Description:</span></h5>
         <p>{{$post['description']}}</p>

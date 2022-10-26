@@ -32,6 +32,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
+          <th scope="col">Post Image</th>
           <th scope="col">Title</th>
           <th scope="col">Posted By</th>
           <th scope="col">Created At</th>
@@ -44,6 +45,7 @@
         @foreach ($posts as $post)
         <tr>
           <th scope="row">{{$post['id']}}</th>
+          <td style="width: 10%"><img src="{{asset('uploads/'.$post->image)}}" width="100%" class="rounded" alt=""></td>
           <td>{{$post['title']}}</td>
           <td>{{$post->user ? $post->user->name : 'Laila'}}</td>
           <td>{{$post->created_at}}</td>
