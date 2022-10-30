@@ -34,7 +34,7 @@ Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edi
 // Route::resource('posts', 'PostController');
 
 // Update New Post
-Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update')->middleware('auth');
+ Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update')->middleware('auth');
 
 // Delete New Post
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy')->middleware('auth');//{{route(name of route)}} in blade
@@ -61,3 +61,31 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 // Route::get('/logout', [Auth\LoginController::class,'logout'])->name('logout');
 
+use Laravel\Socialite\Facades\Socialite;
+ 
+Route::get('/auth/{provider}/redirect', function ($provider) {
+    return Socialite::driver($provider)->redirect();
+});
+ 
+Route::get('/auth/{provider}/callback', function ($provider) {
+    $githubUser = Socialite::driver($provider)->user();
+    
+ 
+    $user = User::where('email', $githubUser->email)->first();
+    if($user) {
+      
+        $user->update([
+            'name' => $githubUser->name,
+        ]);
+    } else {
+        $user = User::create([
+            'email' => $githubUser->email,
+            'name' => $githubUser->name,
+            'password'=>$githubUser->password
+        ]);
+    }
+    Auth::login($user);
+ 
+    return redirect('/home');
+    // $user->token;
+});

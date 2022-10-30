@@ -26,7 +26,7 @@
         <label for="exampleInputPostcreator">Post Creator</label>
         <select class="form-control" id="exampleInputPostcreator" name="user_id" placeholder="Post Creator">
             @foreach ($allUsers as $user)
-               <option value="{{$post['user_id']}}">{{ $user->name }}</option>
+               <option value="{{$post['user_id']}}" selected>{{ $user->name }}</option>
             @endforeach
         </select>
       </div>

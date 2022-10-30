@@ -6,6 +6,11 @@
         {{ session()->get('failed') }}
     </div>
 @endif
+@if(session()->has('failure'))
+   <div class="alert mt-2 alert-success">
+    {{ session()->get('failure') }}
+   </div>
+  @endif
 @if ($errors->any())
     <div class="alert mt-2 alert-danger">
         <div>
@@ -33,9 +38,10 @@
     </div>
     <div class="form-group mb-3">
         <label for="exampleInputPostcreator">Post Creator</label>
-        <select class="form-control" id="exampleInputPostcreator" name="post_creator" placeholder="Post Creator">
+        <select class="form-control" id="exampleInputPostcreator" name="user_id" placeholder="Post Creator">
             @foreach ($allUsers as $user)
-               <option value="{{$user->id}}">{{ $user->name }}</option>
+            
+               <option value="{{Auth::user()->id}}" selected>{{ $user->name }}</option>
             @endforeach
         </select>
       </div>

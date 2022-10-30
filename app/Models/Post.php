@@ -3,6 +3,7 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\User;
 
 use Carbon\Carbon;
 
@@ -12,7 +13,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
+
 {
+    protected $with = ['user'];
+
     use SoftDeletes;
     use HasFactory;
     use Sluggable;

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\Post;
-use App\Models\User;
 
+use App\Rules\PostsForUserRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAndUpdateStoreRequest extends FormRequest
@@ -25,9 +25,10 @@ class StoreAndUpdateStoreRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {  
+    {   
         // dd(StoreAndUpdateStoreRequest::segments(),$this->method());  to get the method 
         if( $this->method()=='PUT' ) {
+            
             return [ 
                 'title' => 'required|min:3',
                 'description' => 'required|min:5', 
@@ -35,12 +36,12 @@ class StoreAndUpdateStoreRequest extends FormRequest
                 'image'=>"image|mimes:png,jpg|max:2048"
             ];
         }else{
+           
         return [
-            'title' => ['required','min:3','unique:posts'],
-            'description' => ['required','min:5'],  
-            'user_id'=>['exists:users'] ,
-            'image'=>['image','mimes:png,jpg','max:2048']
-            
+            'title' => 'sometimes|required|min:3|unique:posts',
+            'description' => 'sometimes|required|min:5',  
+            'user_id'=>'sometimes|exists:posts',//new PostsForUserRule
+            'image'=>['sometimes','image','mimes:png,jpg','max:2048']
         ]; 
         }
     }

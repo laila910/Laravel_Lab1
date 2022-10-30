@@ -3,7 +3,6 @@ namespace Carbon\Carbon;
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
@@ -15,9 +14,14 @@ class PostController extends Controller
 {
     //show all posts
     function index(Request $request) {
-        dispatch(new ProneOldPostsJob());
-        $posts=Post::all(); 
-        $posts=Post::paginate(6);
+        // dispatch(new ProneOldPostsJob());
+        $posts = Post::with('user')->get();
+ 
+        foreach ($posts as $post) {
+            echo $post->user->name;
+        }
+        // $posts=Post::all(); 
+        // $posts=Post::paginate(6);
         if($request->has('view_deleted'))
         {  
             $posts = Post::onlyTrashed()->get();
@@ -33,15 +37,14 @@ class PostController extends Controller
     }
     // store new post
     function store(StoreAndUpdateStoreRequest $request){
-        $image=time().'.'.$request->image->extension();
-        // $data=$request->all();     
-            Post::create([
+        $image=time().'.'.$request->image->extension();  
+           Post::create([
                 'title' => request()->title,
                 'description' => $request->description,
-                'user_id' => $request->post_creator,
+                'user_id' => $request->user_id,
                 'image'=>$image
             ]); 
-            $request->image->move(public_path('uploads'), $image);  
+            $request->image->move(public_path('uploads'), $image); 
             return redirect()->route('posts.index');   
      }
     // show data of post
@@ -61,14 +64,14 @@ class PostController extends Controller
     }
     // Update new Post
     function update(StoreAndUpdateStoreRequest $request,$postId){   
-        // dd($request->all());
+
         if ($request->image) {
             Storage::delete('uploads/' . $request->oldImage);
             $imageName = time() . '.' . $request->image->extension();
            $op= Post::where('id',$postId)->update([
                 'title' => $request->title,
                 'description' => $request->description,
-                'user_id' => $request->post_creator,
+                'user_id' => $request->user_id,
                 'image'=>$imageName
             ]);
             $request->image->move(public_path('uploads'), $imageName);
@@ -81,7 +84,7 @@ class PostController extends Controller
             $op=Post::where('id',$postId)->update([
                 'title' => $request->title,
                 'description' => $request->description,
-                'user_id' => $request->post_creator,
+                'user_id' => $request->user_id,
                 'image'=>$request->oldImage
             ]);
             
