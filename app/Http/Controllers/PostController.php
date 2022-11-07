@@ -64,36 +64,24 @@ class PostController extends Controller
     }
     // Update new Post
     function update(StoreAndUpdateStoreRequest $request,$postId){   
-
+       
+        $post=Post::find($postId);
         if ($request->image) {
-            Storage::delete('uploads/' . $request->oldImage);
+            $path=public_path('uploads/'.$post->image;
+             if(file_exists($path)){
+                @unlink($path);
+            }           
             $imageName = time() . '.' . $request->image->extension();
-           $op= Post::where('id',$postId)->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'user_id' => $request->user_id,
-                'image'=>$imageName
-            ]);
             $request->image->move(public_path('uploads'), $imageName);
-            if($op){
-                return redirect()->route('posts.index');
-             }else{
-                 echo 'error try again';
-             } 
         }else{
-            $op=Post::where('id',$postId)->update([
+             $imageName=$post->image;
+        }
+             Post::where('id',$postId)->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'user_id' => $request->user_id,
-                'image'=>$request->oldImage
+                'image'=>$imageName,
             ]);
-            
-        if($op){
-            return redirect()->route('posts.index');
-         }else{
-             echo 'error try again';
-         } 
-        }
       
       
     }
